@@ -60,5 +60,9 @@ module.exports = {
     */
     extend (config, ctx) {
     }
+  },
+  // This is to fix azure :)
+  server: {
+    host: '0.0.0.0'
   }
 }
