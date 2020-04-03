@@ -33,7 +33,7 @@ module.exports = {
   ** Nuxt.js dev-modules
   */
   buildModules: [
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
   ],
   /*
   ** Nuxt.js modules
@@ -43,7 +43,7 @@ module.exports = {
     'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
   ],
   /*
   ** Axios module configuration

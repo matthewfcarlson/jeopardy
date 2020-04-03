@@ -3,10 +3,10 @@
     <div>
       <logo />
       <h1 class="title">
-        jeoparty
+        jeopardy
       </h1>
       <h2 class="subtitle">
-        awesome
+        a browser based jeopardy game
       </h2>
       <div class="links">
         <a
@@ -35,6 +35,10 @@ import Logo from '~/components/Logo.vue'
 export default Vue.extend({
   components: {
     Logo
+  },
+  validate ({ params }) {
+    // Must be a number
+    return /^\d+$/.test(params.id)
   }
 })
 </script>

@@ -1,6 +1,6 @@
-# jeopardy
+# jeoparty
 
-> a browser based jeopardy game
+> awesome
 
 ## Build Setup
 

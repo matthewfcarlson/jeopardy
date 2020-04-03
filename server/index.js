@@ -1,35 +1,39 @@
-const { Nuxt, Builder } = require('nuxt')
-const fastify = require('fastify')({
-  logger: true
-})
+'use strict'
+const path = require('path')
+const consola = require('consola')
+const feathers = require('@feathersjs/feathers')
+const express = require('@feathersjs/express')
 
-// Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
-config.dev = process.env.NODE_ENV !== 'production'
+process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 
 async function start () {
-  // Instantiate nuxt.js
+  const app = express(feathers())
+
+  const { Nuxt, Builder } = require('nuxt')
+
+  // Setup nuxt.js
+  const config = require('../nuxt.config.js')
+  config.rootDir = path.resolve(__dirname, '..')
+  config.dev = process.env.NODE_ENV !== 'production'
+
   const nuxt = new Nuxt(config)
-
-  const {
-    host = process.env.HOST || '127.0.0.1',
-    port = process.env.PORT || 3000
-  } = nuxt.options.server
-
   await nuxt.ready()
-  // Build only in dev mode
   if (config.dev) {
     const builder = new Builder(nuxt)
     await builder.build()
   }
 
-  fastify.use(nuxt.render)
+  const configuration = require('@feathersjs/configuration')
+  app.configure(configuration()).use(nuxt.render)
 
-  fastify.listen(port, host, (err, address) => {
-    if (err) {
-      fastify.log.error(err)
-      process.exit(1)
-    }
+  const host = app.get('host')
+  const port = app.get('port')
+
+  app.listen(port)
+
+  consola.ready({
+    message: `Feathers application started on ${host}:${port}`,
+    badge: true
   })
 }
 
