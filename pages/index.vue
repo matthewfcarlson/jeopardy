@@ -9,7 +9,7 @@
           type="text"
           v-model.trim="code"
           class="form-control"
-          :class="{ 'is-invalid': error} "
+          :class="{ 'is-invalid': error.length > 0} "
           placeholder="Room code..."
           aria-label="the code to the room you want to join"
           aria-describedby="button-addon2"
@@ -19,7 +19,7 @@
         </div>
         <div
           class="invalid-feedback"
-        >The code is incorrect, try again. It should be a five letter word</div>
+        >{{error}}</div>
       </div>
       <div v-if="thinking">
         <i class="fas fa-circle-notch fa-spin fa-2x"></i>
@@ -51,7 +51,7 @@ export default Vue.extend({
   data: () => {
     return {
       code: '',
-      error: false,
+      error: "",
       thinking: false
     }
   },
@@ -60,16 +60,20 @@ export default Vue.extend({
   },
   methods: {
     async join() {
-      this.error = false
-      this.thinking = true
+      this.error = ""
       if (this.code.length != 5) {
-        this.error = true
+        this.error = "This game code is invalid. It needs to be 5 letters long.";
+        this.thinking = false;
       }
       else{
+        this.thinking = true;
         const result = await this.checkIfRoomExists(this.code);
         this.thinking = false;
         if (result)  {
           this.gotoRoom(this.code);
+        }
+        else {
+          this.error = "This game wasn't found";
         }
       }
     },
@@ -79,8 +83,15 @@ export default Vue.extend({
 
     },
     async checkIfRoomExists(roomcode:string) {
-      const ip = await (this as any).($axios as axio=s).$get('/api/game_exists/'+roomcode);
-      console.log(ip);
+      try {
+        const ip = await (this as any).$axios.$get('/api/game_exists/'+roomcode);
+        console.log(ip);
+        return true;
+      }
+      catch(e) {
+        console.log(e);
+        return false;
+      }
       return false;
     }
   }
