@@ -60,7 +60,8 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+    },
+    transpile: ['feathers-vuex'],
   },
   // This is to fix azure :)
   server: {

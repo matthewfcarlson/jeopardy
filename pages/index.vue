@@ -84,7 +84,7 @@ export default Vue.extend({
     },
     async checkIfRoomExists(roomcode:string) {
       try {
-        const ip = await (this as any).$axios.$get('/api/game_exists/'+roomcode);
+        const ip = await (this as any).$axios.$get('/api/games/'+roomcode);
         console.log(ip);
         return true;
       }
