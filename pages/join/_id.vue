@@ -37,8 +37,8 @@ export default Vue.extend({
     Logo
   },
   validate ({ params }) {
-    // Must be a number
-    return /^\d+$/.test(params.id)
+    // Must be a five letter word all lowercase
+    return /^[a-z]{5}$/.test(params.id)
   }
 })
 </script>
