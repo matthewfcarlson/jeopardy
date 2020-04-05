@@ -29,5 +29,10 @@
     "eslint-plugin-prettier": "^3.1.2",
     "nuxt-imagemin": "^1.0.0",
     "prettier": "^1.19.1"
+  },
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/matthewfcarlson/jeopardy.git"
   }
 }
