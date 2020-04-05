@@ -1,28 +1,31 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
+  <div class="main-container">
+    <div class="container">
       <h1 class="title">
-        jeopardy
+        Create a new game
       </h1>
       <h2 class="subtitle">
-        a browser based jeopardy game
+        Select what options you want
       </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
+      <template v-for="option,index in options">
+        <div class="form-check" v-if="option.type == 'checkbox'" >
+          <input class="form-check-input" type="checkbox" value="" :name="option.name" :id="'value' + option.name" v-model="options[index].value">
+          <label class="form-check-label" :for="'value' + option.name">
+            {{option.label}}
+          </label>
+        </div>
+        <form class="form-inline" v-else-if="option.type == 'number'">
+          <label :for="'value' + option.name">{{option.label}}</label> &nbsp;
+          <input type="number" class="form-control mb-2 mr-sm-2" :name="option.name" :id="'value' + option.name" v-model="options[index].value">
+        </form>
+        <div v-else>
+          Unknown option: {{option}}
+        </div>
+      </template>
+      <br/>
+      <div>
+        <button v-if="!thinking" class="btn btn-lg btn-success" @click="submit">start</button>
+        <i v-else class="fas fa-circle-notch fa-spin fa-2x"></i>
       </div>
     </div>
   </div>
@@ -30,23 +33,40 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Logo from '~/components/Logo.vue'
 
 export default Vue.extend({
-  components: {
-    Logo
+  data () {
+    return {
+      options: [
+        {name: "cat_vote", label: "Allow players to vote Categories", value: true, type:"checkbox"},
+        {name: "final_jep", label: "Have a Final Jeopardy Question", value: false, type:"checkbox"},
+        {name: "daily_dub", label: "Do the Daily double", value: true, type:"checkbox"},
+        {name: "num_rounds", label: "The number of rounds to play", value:1, type:"number"},
+      ],
+      thinking: false
+    }
+  },
+  methods: {
+    submit() {
+      this.thinking = true;
+      var data: {[key:string]: string|number|boolean} = {};
+      this.options.forEach( (x) => {
+        data[x.name] = x.value;
+      })
+      console.log(data);
+      console.log((this as any).$feathersClient)
+    }
   }
 })
 </script>
 
 <style>
-.container {
+.main-container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
 .title {
@@ -67,7 +87,4 @@ export default Vue.extend({
   padding-bottom: 15px;
 }
 
-.links {
-  padding-top: 15px;
-}
 </style>

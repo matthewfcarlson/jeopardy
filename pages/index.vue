@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-container">
     <div>
       <logo />
       <h1 class="title">jeoparty</h1>
@@ -17,9 +17,7 @@
         <div class="input-group-append">
           <button class="btn btn-primary" type="button" id="button-addon2" @click="join">Join</button>
         </div>
-        <div
-          class="invalid-feedback"
-        >{{error}}</div>
+        <div class="invalid-feedback">{{error}}</div>
       </div>
       <div v-if="thinking">
         <i class="fas fa-circle-notch fa-spin fa-2x"></i>
@@ -51,7 +49,7 @@ export default Vue.extend({
   data: () => {
     return {
       code: '',
-      error: "",
+      error: '',
       thinking: false
     }
   },
@@ -60,46 +58,42 @@ export default Vue.extend({
   },
   methods: {
     async join() {
-      this.error = ""
+      this.error = ''
       if (this.code.length != 5) {
-        this.error = "This game code is invalid. It needs to be 5 letters long.";
-        this.thinking = false;
-      }
-      else{
-        this.thinking = true;
-        const result = await this.checkIfRoomExists(this.code);
-        this.thinking = false;
-        if (result)  {
-          this.gotoRoom(this.code);
-        }
-        else {
-          this.error = "This game wasn't found";
+        this.error = 'This game code is invalid. It needs to be 5 letters long.'
+        this.thinking = false
+      } else {
+        this.thinking = true
+        const result = await this.checkIfRoomExists(this.code)
+        this.thinking = false
+        if (result) {
+          this.gotoRoom(this.code)
+        } else {
+          this.error = "This game wasn't found"
         }
       }
     },
-    gotoRoom(roomcode:string) {
-      console.log("Trying to go to "+ roomcode);
-      this.$router.push("join-id/"+roomcode)
-
+    gotoRoom(roomcode: string) {
+      console.log('Trying to go to ' + roomcode)
+      this.$router.push('join-id/' + roomcode)
     },
-    async checkIfRoomExists(roomcode:string) {
+    async checkIfRoomExists(roomcode: string) {
       try {
-        const ip = await (this as any).$axios.$get('/api/games/'+roomcode);
-        console.log(ip);
-        return true;
+        const ip = await (this as any).$axios.$get('/api/games/' + roomcode)
+        console.log(ip)
+        return true
+      } catch (e) {
+        console.log(e)
+        return false
       }
-      catch(e) {
-        console.log(e);
-        return false;
-      }
-      return false;
+      return false
     }
   }
 })
 </script>
 
 <style>
-.container {
+.main-container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;

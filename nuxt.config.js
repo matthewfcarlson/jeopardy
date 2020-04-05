@@ -45,6 +45,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    // Doc: https://github.com/wemake-services/nuxt-imagemin
+    "nuxt-imagemin"
   ],
   /*
   ** Axios module configuration
