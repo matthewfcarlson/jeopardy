@@ -45,6 +45,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    // Doc: https://github.com/nuxt-community/dotenv-module
+    '@nuxtjs/dotenv',
     // Doc: https://github.com/wemake-services/nuxt-imagemin
     "nuxt-imagemin"
   ],
@@ -62,8 +64,7 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    },
-    transpile: ['feathers-vuex'],
+    }
   },
   // This is to fix azure :)
   server: {
