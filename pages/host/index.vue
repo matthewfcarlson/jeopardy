@@ -24,8 +24,10 @@
       </template>
       <br/>
       <div>
+        <p class="text-danger" v-if="error">We failed to create your game, please wait a minute and try again</p>
         <button v-if="!thinking" class="btn btn-lg btn-success" @click="submit">start</button>
         <i v-else class="fas fa-circle-notch fa-spin fa-2x"></i>
+        
       </div>
     </div>
   </div>
@@ -43,18 +45,29 @@ export default Vue.extend({
         {name: "daily_dub", label: "Do the Daily double", value: true, type:"checkbox"},
         {name: "num_rounds", label: "The number of rounds to play", value:1, type:"number"},
       ],
-      thinking: false
+      thinking: false,
+      error: false
     }
   },
   methods: {
-    submit() {
+    async submit() {
       this.thinking = true;
+      this.error = false;
       var data: {[key:string]: string|number|boolean} = {};
       this.options.forEach( (x) => {
         data[x.name] = x.value;
       })
       console.log(data);
-      console.log((this as any).$feathersClient)
+      try {
+        const response = await (this as any).$axios.$post('/api/games/', data)
+        console.log("Got new game code: "+ response);
+        if (response.length == 5) this.$router.replace('/host/'+response);
+      }
+      catch (e) {
+        console.error(e);
+        this.error = true;
+      }
+      this.thinking = false;
     }
   }
 })

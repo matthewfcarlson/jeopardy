@@ -1,6 +1,6 @@
 <template>
   <div class="main-container">
-    <div>
+    <div class="container">
       <logo />
       <h1 class="title">jeoparty</h1>
       <h2 class="subtitle">Jeopardy for everybody</h2>
@@ -75,15 +75,13 @@ export default Vue.extend({
     },
     gotoRoom(roomcode: string) {
       console.log('Trying to go to ' + roomcode)
-      this.$router.push('join-id/' + roomcode)
+      this.$router.push('/join/' + roomcode)
     },
     async checkIfRoomExists(roomcode: string) {
       try {
-        const ip = await (this as any).$axios.$get('/api/games/' + roomcode)
-        console.log(ip)
+        const ip = await (this as any).$axios.$head('/api/games/' + roomcode)
         return true
       } catch (e) {
-        console.log(e)
         return false
       }
       return false

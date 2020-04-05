@@ -48,8 +48,23 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
     // Doc: https://github.com/wemake-services/nuxt-imagemin
-    "nuxt-imagemin"
+    "nuxt-imagemin",
+    'nuxt-socket-io'
   ],
+  /* IO SOCKET */
+  io: {
+    sockets: [
+      {
+        name: 'dev',
+        url: 'http://localhost:3000',
+        default: true
+      },
+      {
+        name: 'prod',
+        url: "https://jeoparty.azurewebsites.net"
+      }
+    ]
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

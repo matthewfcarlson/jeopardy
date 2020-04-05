@@ -38,7 +38,14 @@ export default Vue.extend({
   },
   validate ({ params }) {
     // Must be a five letter word all lowercase
-    return /^[a-z]{5}$/.test(params.id)
+    return /^[A-z]{5}$/.test(params.id)
+  },
+  mounted () {
+    console.error(this);
+    (this as any).socket = (this as any).$nuxtSocket({
+      name: '',
+      channel: 'test'
+    })
   }
 })
 </script>

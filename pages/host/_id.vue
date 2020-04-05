@@ -1,31 +1,8 @@
 <template>
   <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        jeopardy
-      </h1>
-      <h2 class="subtitle">
-        a browser based jeopardy game
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    This is where the host manages the game.
   </div>
+    
 </template>
 
 <script lang="ts">
@@ -38,40 +15,10 @@ export default Vue.extend({
   },
   validate ({ params }) {
     // Must be a five letter word all lowercase
-    return /^[a-z]{5}$/.test(params.id)
+    return /^[A-z]{5}$/.test(params.id)
   }
 })
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
